@@ -10,7 +10,7 @@ export default function Bookcard({title, year, authors, rating, amazonid }){
             {authors?.map(author =>
               <p key={author}>{author}</p>)}
             <p>rating: {rating}</p>
-            <a href={amazonid}>Amazon</a>
+            <a href={"https://www.amazon.com/s?k="+(amazonid?amazonid[0]:"")}>Amazon</a>
           </article>
     )
 }

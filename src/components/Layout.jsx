@@ -9,8 +9,8 @@ export default function Layout({children}){
       <h1>Book Library</h1>
       <nav>
         <ul>
-        <li><a href="#">Home</a></li>
-          <li><a href="#">Search</a></li>
+        <li><a href="/">Home</a></li>
+          <li><a href="booksearch">Search</a></li>
         </ul>
       </nav>
     </header>
