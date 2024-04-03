@@ -2,6 +2,9 @@ import { useEffect, useState } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
+import { Route, Routes } from 'react-router-dom'
+import Layout from './components/Layout'
+import Homepage from './components/Homepage'
 
 function App() {
 
@@ -23,36 +26,14 @@ function App() {
   useEffect(()=>{
     getData()
   },[])
+
+
   return(
-  <>
-  <header>
-    <h1>Book Library</h1>
-    <nav>
-      <ul>
-      <li><a href="#">Home</a></li>
-        <li><a href="#">Search</a></li>
-      </ul>
-
-      <main>
-        <section>
-          {content?.map(book =>
-          <article key={book.key}>
-            <h3>{book.title}</h3>
-            <p>{book.first_publish_year}</p>
-            {book.author_name?.map(author =>
-              <p key={author+book.key}>{author}</p>)}
-            <p>rating: {book.ratings_average}</p>
-            <a href={book.id_amazon}>Amazon</a>
-          </article> )}
-        </section>
-
-
-      </main>
-      <footer>footer</footer>
-    </nav>
-  </header>
-  
-  </>
+    <Layout>
+      <Routes>
+        <Route index element={<Homepage content={content}/>} />
+      </Routes>
+    </Layout>
   )
 }
 
