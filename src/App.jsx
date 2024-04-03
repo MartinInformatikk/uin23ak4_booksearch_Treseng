@@ -1,35 +1,60 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
 
 function App() {
-  const [count, setCount] = useState(0)
 
-  return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
+  const [content, setContent] = useState([])
+  const [query, setQuery] = useState("james+bond")
+  const [currentId, setCurrentId] = useState("")
+
+  const getData = async()=>{
+    try{
+      const response = await fetch(`https://openlibrary.org/search.json?title=james+bond`)
+      const data = await response.json()
+      setContent(data.docs)
+      console.log(data.docs)
+    }catch{
+      console.error("Error")
+    }
+  }
+
+  useEffect(()=>{
+    getData()
+  },[])
+  return(
+  <>
+  <header>
+    <h1>Book Library</h1>
+    <nav>
+      <ul>
+      <li><a href="#">Home</a></li>
+        <li><a href="#">Search</a></li>
+      </ul>
+
+      <main>
+        <section>
+          {content?.map(book =>
+          <article key={book.key}>
+            <h3>{book.title}</h3>
+            <p>{book.first_publish_year}</p>
+            {book.author_name?.map(author =>
+              <p key={author+book.key}>{author}</p>)}
+            <p>rating: {book.ratings_average}</p>
+            <a href={book.id_amazon}>Amazon</a>
+          </article> )}
+        </section>
+
+
+      </main>
+      <footer>footer</footer>
+    </nav>
+  </header>
+  
+  </>
   )
 }
+
 
 export default App
